@@ -9,7 +9,7 @@ from keras_facenet import FaceNet
 DATASET_PATH = r"D:\New folder\SKILLPARK\HOSTEL_MANAGEMENT_SYSTEM\PROJECT\Dataset"
 SAVE_PATH = r"D:\New folder\SKILLPARK\HOSTEL_MANAGEMENT_SYSTEM\encodings.pkl"
 
-print("📂 Loading models...")
+print("📂 Loading Models...")
 detector = MTCNN()
 embedder = FaceNet()
 
@@ -17,10 +17,10 @@ known_encodings = []
 known_names = []
 
 if not os.path.exists(DATASET_PATH):
-    print("❌ Dataset folder not found!")
+    print("❌ Dataset not found!")
     exit()
 
-print("🚀 Processing dataset...")
+print("🚀 Encoding Faces...")
 
 for person in os.listdir(DATASET_PATH):
     person_path = os.path.join(DATASET_PATH, person)
@@ -65,13 +65,10 @@ for person in os.listdir(DATASET_PATH):
             continue
 
 # ---------------- SAVE ----------------
-if known_encodings:
-    with open(SAVE_PATH, "wb") as f:
-        pickle.dump({
-            "encodings": np.array(known_encodings),
-            "names": known_names
-        }, f)
+with open(SAVE_PATH, "wb") as f:
+    pickle.dump({
+        "encodings": np.array(known_encodings),
+        "names": known_names
+    }, f)
 
-    print(f"✅ Encodings saved at: {SAVE_PATH}")
-else:
-    print("❌ No faces encoded!")
+print(f"✅ Saved encodings to {SAVE_PATH}")
